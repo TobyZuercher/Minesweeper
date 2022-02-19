@@ -12,7 +12,7 @@ public void setup() {
   float bWidth = width/NUM_COLUMNS; float bHeight = height/NUM_ROWS;
   boolean b = false;
   for(int i = 0; i < NUM_ROWS; i++) {
-    if(i%2 == 0) b = !b;
+    b = !b;
     for(int j = 0; j < NUM_COLUMNS; j++) {
       b = !b;
       float x = i * bWidth; float y = j * bHeight;
