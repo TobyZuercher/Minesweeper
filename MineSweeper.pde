@@ -7,6 +7,7 @@ public void setup() {
   size(600, 600);
   background(0);
   textSize(18);
+  noStroke();
   colorMode(HSB, 360, 100, 100, 100);
   Interactive.make(this);
   float bWidth = width/NUM_COLUMNS; float bHeight = height/NUM_ROWS;
