@@ -12,9 +12,9 @@ public void setup() {
   float bWidth = width/NUM_COLUMNS; float bHeight = height/NUM_ROWS;
   boolean b = false;
   for(int i = 0; i < NUM_ROWS; i++) {
-    b = !b;
+    if(i%2 == 0) b = !b;
     for(int j = 0; j < NUM_COLUMNS; j++) {
-      if(j%2 == 0) b = !b;
+      b = !b;
       float x = i * bWidth; float y = j * bHeight;
       field[i][j] = new Square(x, y, bWidth, bHeight, b);
     }
