@@ -1,12 +1,11 @@
 public class Square {
   private float x, y, width, height;
-  private boolean flagged, isBomb, revealed, checker;
+  private boolean flagged, isBomb, revealed, checker, zeroClicked;
   private int tileNum;
   public Square(float xPos, float yPos, float w, float h, boolean b) {
-    width = w; height = h; x = xPos; y = yPos; flagged = false; revealed = false; isBomb = false; checker = b;
+    width = w; height = h; x = xPos; y = yPos; flagged = false; revealed = false; isBomb = false; zeroClicked = false; checker = b;
     Interactive.add(this);
     tileNum = 0;
-    System.out.println((int)(xPos/60) + ", " + (int)(yPos/60-50));
   }
   
   public void setBomb() { isBomb = true; }
@@ -14,6 +13,9 @@ public class Square {
   
   public void setNum(int n) { tileNum = n; }
   public int getNum() { return tileNum; }
+  
+  public boolean zeroClicked() { return zeroClicked; }
+  public boolean isRevealed() { return revealed; }
   
   public void mousePressed() {
     if(GAME_OVER || revealed) return;
@@ -25,6 +27,11 @@ public class Square {
     if(flagged) return;
     if(isBomb) setEndScreen();
     revealed = true;
+    if(tileNum == 0) {
+      zeroClicked = true;
+      clickedZero();
+      zeroClicked = false;
+    }
   }
   
   public void clickRight() { //something going wrong here, could also be in the reinitialization of the buttons

@@ -18,12 +18,13 @@ public void setup() {
   Interactive.make(this);
   float bWidth = width/NUM_COLUMNS; float bHeight = (height - 50)/NUM_ROWS;
   boolean b = false;
-  for(int i = 0; i < NUM_ROWS; i++) {
-    b = !b;
-    for(int j = 0; j < NUM_COLUMNS; j++) {
+  for(int r = 0; r < NUM_ROWS; r++) {
+    int n = NUM_ROWS;
+    if(n%2 == 0) b = !b;
+    for(int c = 0; c < NUM_COLUMNS; c++) {
       b = !b;    
-      float x = i * bWidth; float y = j * bHeight + 50;
-      field[i][j] = new Square(x, y, bWidth, bHeight, b);
+      float x = r * bWidth; float y = c * bHeight + 50;
+      field[r][c] = new Square(x, y, bWidth, bHeight, b);
     }
   }
   int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
@@ -68,10 +69,29 @@ public void setEndScreen() {
   c.draw();
 }
 
+public void clickedZero() {
+  for(int i = 0; i < NUM_ROWS; i++) {
+    for(int j = 0; j < NUM_COLUMNS; j++) {
+      if(field[i][j].zeroClicked()) {
+        System.out.println(i + ", " + j);
+        for(int n1 = -1; n1 <= 1; n1++) {
+          for(int n2 = -1; n2 <= 1; n2++) {
+            if(i+n1 >= 0 && i+n1 < NUM_ROWS && j+n2 >= 0 && j+n2 < NUM_COLUMNS) {
+              Square s = field[i + n1][j + n2];
+              if(!s.isRevealed())
+                s.clickLeft();
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 // TO DO:
 // - make the restart work, stop it from marking flags incorrectly
 // - add win screen
-// - click 8 tiles around
 // - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations
 // - potentially add different modes, but will be hard
+// - on first click, if not a 0 square then regenerate
