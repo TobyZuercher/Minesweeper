@@ -16,7 +16,7 @@ public class Square {
   
   public boolean zeroClicked() { return zeroClicked; }
   public boolean isRevealed() { return revealed; }
-  
+    
   public void mousePressed() {
     if(GAME_OVER || revealed) return;
     if(mouseButton == RIGHT) clickRight();
@@ -24,6 +24,7 @@ public class Square {
   }
   
   public void clickLeft() {
+    if(GAME_OVER || revealed) return;
     if(flagged) return;
     if(isBomb) setEndScreen();
     revealed = true;
@@ -35,6 +36,7 @@ public class Square {
   }
   
   public void clickRight() { //something going wrong here, could also be in the reinitialization of the buttons
+    if(GAME_OVER || revealed) return;
     if(flagged) flagsLeft++;
     else flagsLeft--;
     System.out.println(flagsLeft);
@@ -44,28 +46,26 @@ public class Square {
   public void draw() {
     if(GAME_OVER) return;
     rectMode(CORNER);
-    fill(0, (flagged ? 100 : 0), (checker ? 90 : 100));
+    fill(0, (flagged ? 100 : 0), (checker ? 90 : 100), (isBomb ? 100 : 20));
     rect(x, y, width, height);
     fill(0, 0, 0, 100);
     if(revealed) text((isBomb ? "boom" : "" + tileNum), x+width/2, y+(5*width/8));
   }
 }
 
-public class Selector {
+public class RestartButton {
   private float x, y, width, height;
   private String text;
-  private int TYPE;
   
-  public Selector(float xPos, float yPos, float w, float h, String t, int T) {
-    x = xPos; y = yPos; width = w; height = h; text = t; TYPE = T;
-    Interactive.add(this);
+  public RestartButton(float xPos, float yPos, float w, float h, String t) {
+    x = xPos; y = yPos; width = w; height = h; text = t;
   }
   
-  public void mousePressed() {
-    if(TYPE == 0) setup();
+  public void clicked() {
+    setup();
   }
   
-  public void draw() {
+  public void show() {
     rectMode(CENTER);
     fill(255);
     rect(x, y, width, height, 5);

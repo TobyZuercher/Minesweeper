@@ -4,17 +4,17 @@ public static final int NUM_COLUMNS = 10;
 public Square[][] field = new Square[NUM_ROWS][NUM_COLUMNS]; // can only make squares for some reason :(  --> i'll fix it later when it works
 public boolean GAME_OVER = false;
 public int flagsLeft = 0;
-public static final int RESTART = 0;
 
 public void setup() {
+  System.out.println(GAME_OVER);
   GAME_OVER = false;
   flagsLeft = 0;
   size(600, 650); // 60 * NUM_COLUMNS, 60 * NUM_ROWS + 50  --> eventually change to set size that can later change
-  background(0);
   textSize(24);
   textAlign(CENTER);
   noStroke();
   colorMode(HSB, 360, 100, 100, 100);
+  background(0, 0, 0, 100);
   Interactive.make(this);
   float bWidth = width/NUM_COLUMNS; float bHeight = (height - 50)/NUM_ROWS;
   boolean b = false;
@@ -54,7 +54,7 @@ public void setup() {
 
 public void draw() {
   if(GAME_OVER) return;
-  background(0);
+  background(0, 0, 0, 100);
   fill(0, 0, 100);
   text(flagsLeft, 20, 25);
 }
@@ -68,12 +68,12 @@ public void setEndScreen() {
   }
   System.gc();
   GAME_OVER = true;
-  background(0);
+  background(0, 0, 0, 100);
   textSize(50);
   text("YOU LOST", width/2, height/2);
   textSize(25);
-  Selector c = new Selector(width/2, 3*height/4, 100, 50, "restart", RESTART);
-  c.draw();
+  
+  
 }
 
 public void clickedZero() {
@@ -96,7 +96,7 @@ public void clickedZero() {
 
 
 // TO DO:
-// - make the restart work, stop it from marking flags incorrectly --> it's making a second array of tiles when you restart, i dont know where :(
+// - make the restart work, stop it from marking flags incorrectly --> running setup multiple times because restart button is not removed
 // - add win screen
 // - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations
 // - potentially add different modes, but will be hard
