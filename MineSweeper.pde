@@ -27,7 +27,8 @@ public void setup() {
       field[r][c] = new Square(x, y, bWidth, bHeight, b);
     }
   }
-  int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
+  //int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
+  int numBombs = 1;
   for(int i = 0; i < numBombs; i++) {
     int x = (int)(Math.random() * NUM_COLUMNS);
     int y = (int)(Math.random() * NUM_ROWS);
@@ -60,6 +61,12 @@ public void draw() {
 
 public void setEndScreen() {
   noLoop();
+  for(int r = 0; r < NUM_ROWS; r++) {
+    for(int c = 0; c < NUM_COLUMNS; c++) {
+      field[r][c] = null;
+    }
+  }
+  System.gc();
   GAME_OVER = true;
   background(0);
   textSize(50);
@@ -73,7 +80,6 @@ public void clickedZero() {
   for(int i = 0; i < NUM_ROWS; i++) {
     for(int j = 0; j < NUM_COLUMNS; j++) {
       if(field[i][j].zeroClicked()) {
-        System.out.println(i + ", " + j);
         for(int n1 = -1; n1 <= 1; n1++) {
           for(int n2 = -1; n2 <= 1; n2++) {
             if(i+n1 >= 0 && i+n1 < NUM_ROWS && j+n2 >= 0 && j+n2 < NUM_COLUMNS) {
@@ -90,7 +96,7 @@ public void clickedZero() {
 
 
 // TO DO:
-// - make the restart work, stop it from marking flags incorrectly
+// - make the restart work, stop it from marking flags incorrectly --> it's making a second array of tiles when you restart, i dont know where :(
 // - add win screen
 // - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations
 // - potentially add different modes, but will be hard
