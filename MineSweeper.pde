@@ -2,12 +2,16 @@ import de.bezier.guido.*;
 public static final int NUM_ROWS = 10;
 public static final int NUM_COLUMNS = 10;
 public Square[][] field = new Square[NUM_ROWS][NUM_COLUMNS]; // can only make squares for some reason :(  --> i'll fix it later when it works
-public boolean GAME_OVER = false;
+public boolean GAME_OVER = false; 
+public boolean firstClick = true;
 public int flagsLeft = 0;
+public RestartButton r = null;
+public static final int WIDTH = 600;
+public static final int HEIGHT = 650;
 
 public void setup() {
-  System.out.println(GAME_OVER);
   GAME_OVER = false;
+  firstClick = true;
   flagsLeft = 0;
   size(600, 650); // 60 * NUM_COLUMNS, 60 * NUM_ROWS + 50  --> eventually change to set size that can later change
   textSize(24);
@@ -24,16 +28,20 @@ public void setup() {
     for(int c = 0; c < NUM_COLUMNS; c++) {
       b = !b;    
       float x = r * bWidth; float y = c * bHeight + 50;
-      field[r][c] = new Square(x, y, bWidth, bHeight, b);
+      if(field[r][c] == null)
+        field[r][c] = new Square(x, y, bWidth, bHeight, b, r, c);
+      else { 
+        field[r][c].clear();
+      }
     }
   }
   //int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
-  int numBombs = 1;
+  int numBombs = 10;
   for(int i = 0; i < numBombs; i++) {
     int x = (int)(Math.random() * NUM_COLUMNS);
     int y = (int)(Math.random() * NUM_ROWS);
     if(field[y][x].isBomb()) i -= 1;
-    else field[y][x].setBomb();
+    else { field[y][x].setBomb(); }
   }
   flagsLeft = numBombs;
   for(int i = 0; i < NUM_ROWS; i++) {
@@ -52,28 +60,54 @@ public void setup() {
   loop();
 }
 
+public void mousePressed() {
+  if(r != null) {
+    if(mouseX >=- (width/2)-50 && mouseX <= (width/2)+50 && mouseY >= (3*height/4)-25 && mouseY <= (3*height/4)+25) {
+      r.clicked();
+      r = null;
+    }
+  }
+}
+
 public void draw() {
   if(GAME_OVER) return;
   background(0, 0, 0, 100);
   fill(0, 0, 100);
   text(flagsLeft, 20, 25);
-}
-
-public void setEndScreen() {
-  noLoop();
   for(int r = 0; r < NUM_ROWS; r++) {
-    for(int c = 0; c < NUM_COLUMNS; c++) {
-      field[r][c] = null;
+    for(int c = 0; c < NUM_ROWS; c++) {
+      Square s = field[r][c];
+      float[] pos = s.getPos();
+      fill(80, 60, (s.checkered() ? 90 : 100));
+      rect(pos[0], pos[1], pos[2], pos[3]);
     }
   }
-  System.gc();
+  for(int r = 0; r < NUM_ROWS; r++) {
+    for(int c = 0; c < NUM_COLUMNS; c++) {
+      if(!field[r][c].isRevealed() && !field[r][c].isBomb()) {
+        return;
+      }
+    }
+  }
+  for(int r = 0; r < NUM_ROWS; r++) {
+    for(int c = 0; c < NUM_COLUMNS; c++) {
+      field[r][c].draw();
+    }
+  }
+  setEndScreen(true);
+}
+
+public void setEndScreen(boolean won) {
+  noLoop();
   GAME_OVER = true;
-  background(0, 0, 0, 100);
+  fill(0);
+  rect(50, 100, width-100, height-150, 5);
   textSize(50);
-  text("YOU LOST", width/2, height/2);
+  fill(255);
+  text("YOU " + (won ? "WON" : "LOST"), width/2, height/2);
   textSize(25);
-  
-  
+  r = new RestartButton(width/2, 3*height/4, 100, 50, "restart");
+  r.show();
 }
 
 public void clickedZero() {
@@ -96,8 +130,5 @@ public void clickedZero() {
 
 
 // TO DO:
-// - make the restart work, stop it from marking flags incorrectly --> running setup multiple times because restart button is not removed
-// - add win screen
-// - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations
+// - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations --> add outline around non-revealed tiles
 // - potentially add different modes, but will be hard
-// - on first click, if not a 0 square then regenerate
