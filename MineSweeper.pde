@@ -8,8 +8,10 @@ public int flagsLeft = 0;
 public RestartButton r = null;
 public static final int WIDTH = 600;
 public static final int HEIGHT = 650;
+public PImage flag;
 
 public void setup() {
+  flag = loadImage("flag.png");
   GAME_OVER = false;
   firstClick = true;
   flagsLeft = 0;
@@ -35,8 +37,7 @@ public void setup() {
       }
     }
   }
-  //int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
-  int numBombs = 10;
+  int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
   for(int i = 0; i < numBombs; i++) {
     int x = (int)(Math.random() * NUM_COLUMNS);
     int y = (int)(Math.random() * NUM_ROWS);
@@ -62,7 +63,7 @@ public void setup() {
 
 public void mousePressed() {
   if(r != null) {
-    if(mouseX >=- (width/2)-50 && mouseX <= (width/2)+50 && mouseY >= (3*height/4)-25 && mouseY <= (3*height/4)+25) {
+    if(mouseX >= (width/2)-50 && mouseX <= (width/2)+50 && mouseY <= 3*height/4+25 && mouseY >= 3*height/4-25) {
       r.clicked();
       r = null;
     }
@@ -82,6 +83,22 @@ public void draw() {
       rect(pos[0], pos[1], pos[2], pos[3]);
     }
   }
+  stroke(0);
+  strokeWeight(2);
+  for(int r = 0; r < NUM_ROWS; r++) {
+    for(int c = 0; c < NUM_ROWS; c++) {
+      Square s = field[r][c];
+      float[] pos = s.getPos();
+      float x = pos[0]; float y = pos[1]; float w = pos[2]; float h = pos[3];
+      if(!s.isRevealed()) {
+        if(c == NUM_COLUMNS-1 || field[r][c+1].isRevealed()) line(x, y+h, x+w, y+h);
+        if(c == 0 || field[r][c-1].isRevealed()) line(x, y, x+w, y);
+        if(r == NUM_ROWS-1 || field[r+1][c].isRevealed()) line(x+w, y, x+w, y+h);
+        if(r == 0 || field[r-1][c].isRevealed()) line(x, y, x, y+h);
+      }
+    }
+  }
+  noStroke();
   for(int r = 0; r < NUM_ROWS; r++) {
     for(int c = 0; c < NUM_COLUMNS; c++) {
       if(!field[r][c].isRevealed() && !field[r][c].isBomb()) {
@@ -98,6 +115,7 @@ public void draw() {
 }
 
 public void setEndScreen(boolean won) {
+  delay(1);
   noLoop();
   GAME_OVER = true;
   fill(0);
@@ -132,3 +150,4 @@ public void clickedZero() {
 // TO DO:
 // - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations --> add outline around non-revealed tiles
 // - potentially add different modes, but will be hard
+// - make restart button work at y = 3*height/4

@@ -62,9 +62,12 @@ public class Square {
   public void draw() {
     if(GAME_OVER) return;
     rectMode(CORNER);
-    fill(0, 100, (checker ? 90 : 100), (flagged ? 100 : 0));
-    rect(x, y, width, height);
+    //fill(0, 100, (checker ? 90 : 100), (flagged ? 100 : 0));
+    //rect(x, y, width, height);
+    if(flagged)
+      image(flag, x+width/8, y+height/8, 3*width/4, 3*height/4);
     fill(0, 0, 0, 100);
+    textSize(width/2);
     if(revealed) text((isBomb ? "boom" : "" + tileNum), x+width/2, y+(5*width/8));
   }
 }
