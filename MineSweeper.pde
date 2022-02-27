@@ -119,7 +119,6 @@ public void draw() {
 }
 
 public void setEndScreen(boolean won) {
-  delay(1);
   noLoop();
   GAME_OVER = true;
   fill(0);
