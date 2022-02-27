@@ -9,9 +9,12 @@ public RestartButton r = null;
 public static final int WIDTH = 600;
 public static final int HEIGHT = 650;
 public PImage flag;
+public PFont font;
 
 public void setup() {
   flag = loadImage("flag.png");
+  font = createFont("bitlow.ttf", 12);
+  textFont(font);
   GAME_OVER = false;
   firstClick = true;
   flagsLeft = 0;
@@ -37,7 +40,7 @@ public void setup() {
       }
     }
   }
-  int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15);
+  int numBombs = (int)((NUM_ROWS*NUM_COLUMNS) * 0.15) + (int)(Math.random() * 4);
   for(int i = 0; i < numBombs; i++) {
     int x = (int)(Math.random() * NUM_COLUMNS);
     int y = (int)(Math.random() * NUM_ROWS);
@@ -72,14 +75,15 @@ public void mousePressed() {
 
 public void draw() {
   if(GAME_OVER) return;
-  background(0, 0, 0, 100);
+  background(0, 0, 50, 100);
   fill(0, 0, 100);
-  text(flagsLeft, 20, 25);
+  image(flag, 45, 5, 40, 40);
+  text(flagsLeft, 30 , 35);
   for(int r = 0; r < NUM_ROWS; r++) {
     for(int c = 0; c < NUM_ROWS; c++) {
       Square s = field[r][c];
       float[] pos = s.getPos();
-      fill(80, 60, (s.checkered() ? 90 : 100));
+      fill(80, 60 + (s.isRevealed() ? 0 : 20), (s.checkered() ? 90 : 100) - (s.isRevealed() ? 0 : 10));
       rect(pos[0], pos[1], pos[2], pos[3]);
     }
   }
@@ -124,7 +128,7 @@ public void setEndScreen(boolean won) {
   fill(255);
   text("YOU " + (won ? "WON" : "LOST"), width/2, height/2);
   textSize(25);
-  r = new RestartButton(width/2, 3*height/4, 100, 50, "restart");
+  r = new RestartButton(width/2, 3*height/4, 200, 50, "RESTART");
   r.show();
 }
 
@@ -148,6 +152,6 @@ public void clickedZero() {
 
 
 // TO DO:
-// - add colors for numbers, better font, nice tiles, better score counters, nicer looking screen and animations --> add outline around non-revealed tiles
+// - add colors for numbers
 // - potentially add different modes, but will be hard
 // - make restart button work at y = 3*height/4

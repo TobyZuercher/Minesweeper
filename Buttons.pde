@@ -66,9 +66,28 @@ public class Square {
     //rect(x, y, width, height);
     if(flagged)
       image(flag, x+width/8, y+height/8, 3*width/4, 3*height/4);
-    fill(0, 0, 0, 100);
+    //fill(0, 0, 0, 100);
     textSize(width/2);
-    if(revealed) text((isBomb ? "boom" : "" + tileNum), x+width/2, y+(5*width/8));
+    switch(tileNum) {
+      case 1: fill(240, 100, 100); //blue
+        break;
+      case 2: fill(120, 100, 40); //green
+        break;
+      case 3: fill(0, 100, 100); //red
+        break;
+      case 4: fill(265, 100, 100); //purple
+        break;
+      case 5: fill(0, 100, 50); //dark red
+        break;
+      case 6: fill(160, 100, 80); //cyan
+        break;
+      case 7: fill(0, 0, 0); //black
+        break;
+      case 8: fill(0, 0, 50); //gray
+        break;
+      default: fill(0, 0, 0);
+    }
+    if(revealed) text((tileNum == 0 ? "" : "" + tileNum), x+width/2, y+(5*width/8));
   }
 }
 
