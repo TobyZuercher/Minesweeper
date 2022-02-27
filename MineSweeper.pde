@@ -44,17 +44,17 @@ public void setup() {
   for(int i = 0; i < numBombs; i++) {
     int x = (int)(Math.random() * NUM_COLUMNS);
     int y = (int)(Math.random() * NUM_ROWS);
-    if(field[y][x].isBomb()) i -= 1;
+    if(field[y][x].getBomb()) i -= 1;
     else { field[y][x].setBomb(); }
   }
   flagsLeft = numBombs;
   for(int i = 0; i < NUM_ROWS; i++) {
     for(int j = 0; j < NUM_COLUMNS; j++) {
-      if(!field[i][j].isBomb()) {
+      if(!field[i][j].getBomb()) {
         for(int n1 = -1; n1 <= 1; n1++) {
           for(int n2 = -1; n2 <= 1; n2++) {
             if(i+n1 >= 0 && i+n1 < NUM_ROWS && j+n2 >= 0 && j+n2 < NUM_COLUMNS) {
-              if(field[i+n1][j+n2].isBomb()) field[i][j].setNum(field[i][j].getNum() + 1);
+              if(field[i+n1][j+n2].getBomb()) field[i][j].setNum(field[i][j].getNum() + 1);
             }
           }
         }
@@ -105,7 +105,7 @@ public void draw() {
   noStroke();
   for(int r = 0; r < NUM_ROWS; r++) {
     for(int c = 0; c < NUM_COLUMNS; c++) {
-      if(!field[r][c].isRevealed() && !field[r][c].isBomb()) {
+      if(!field[r][c].isRevealed() && !field[r][c].getBomb()) {
         return;
       }
     }
@@ -135,7 +135,7 @@ public void setEndScreen(boolean won) {
 public void clickedZero() {
   for(int i = 0; i < NUM_ROWS; i++) {
     for(int j = 0; j < NUM_COLUMNS; j++) {
-      if(field[i][j].zeroClicked()) {
+      if(field[i][j].blankClicked()) {
         for(int n1 = -1; n1 <= 1; n1++) {
           for(int n2 = -1; n2 <= 1; n2++) {
             if(i+n1 >= 0 && i+n1 < NUM_ROWS && j+n2 >= 0 && j+n2 < NUM_COLUMNS) {

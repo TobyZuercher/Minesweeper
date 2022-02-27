@@ -13,11 +13,11 @@ public class Square {
   public void setNum(int n) { tileNum = n; }
   
   public int getNum() { return tileNum; }
-  public boolean zeroClicked() { return zeroClicked; }
+  public boolean blankClicked() { return zeroClicked; }
   public boolean isRevealed() { return revealed; }
   public boolean isFlagged() { return flagged; }
   public boolean checkered() { return checker; }
-  public boolean isBomb() { return isBomb; }
+  public boolean getBomb() { return isBomb; }
   
   public float[] getPos() {
     return new float[]{x, y, width, height};
