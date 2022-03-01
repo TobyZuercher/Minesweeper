@@ -13,7 +13,7 @@ public PFont font;
 
 public void setup() {
   flag = loadImage("flag.png");
-  font = createFont("bitlow.ttf", 12);
+  font = createFont("bitlow.ttf", 72);
   textFont(font);
   GAME_OVER = false;
   firstClick = true;
