@@ -93,10 +93,10 @@ public class Square {
 
 public class RestartButton {
   private float x, y, width, height;
-  private String text;
+  private String t;
   
   public RestartButton(float xPos, float yPos, float w, float h, String s) {
-    x = xPos; y = yPos; width = w; height = h; text = s;
+    x = xPos; y = yPos; width = w; height = h; t = s;
   }
   
   public void clicked() {
@@ -108,7 +108,7 @@ public class RestartButton {
     fill(255);
     rect(x, y, width, height, 5);
     fill(0);
-    text(text, x, y+height/8);
+    text(t, x, y+height/8);
   }
 }
 
