@@ -10,10 +10,17 @@ public static final int WIDTH = 600;
 public static final int HEIGHT = 650;
 public PImage flag;
 public PFont font;
+public PImage[] particles = new PImage[5];
+public ArrayList<Particle> explosions = new ArrayList<Particle>();
 
 public void setup() {
   flag = loadImage("flag.png");
   font = createFont("bitlow.otf", 72);
+  particles[0] = loadImage("");
+  particles[1] = loadImage("");
+  particles[2] = loadImage("");
+  particles[3] = loadImage("");
+  particles[4] = loadImage("");
   textFont(font);
   GAME_OVER = false;
   firstClick = true;
@@ -103,6 +110,9 @@ public void draw() {
     }
   }
   noStroke();
+  for(int i = 0; i < explosions.size(); i++) {
+    if(!explosions.get(i).show()) i--;
+  }
   for(int r = 0; r < NUM_ROWS; r++) {
     for(int c = 0; c < NUM_COLUMNS; c++) {
       if(!field[r][c].isRevealed() && !field[r][c].getBomb()) {
@@ -151,6 +161,6 @@ public void clickedZero() {
 
 
 // TO DO:
-// - add colors for numbers
 // - potentially add different modes, but will be hard
 // - make restart button work at y = 3*height/4
+// - particles :) --> add in textures, additionally actually make them appear upon clicking. maybe change randomness to a set thing
