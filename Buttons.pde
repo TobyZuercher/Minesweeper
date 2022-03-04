@@ -36,6 +36,7 @@ public class Square {
   public void clickLeft() {
     if(GAME_OVER || revealed) return;
     if(flagged) return;
+    addExplosion(x + width/2, y + height/2, 5);
     if(firstClick) {
       if(isBomb || tileNum != 0) {
         reRunSetup(col, row);

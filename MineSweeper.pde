@@ -16,11 +16,11 @@ public ArrayList<Particle> explosions = new ArrayList<Particle>();
 public void setup() {
   flag = loadImage("flag.png");
   font = createFont("bitlow.otf", 72);
-  particles[0] = loadImage("");
-  particles[1] = loadImage("");
-  particles[2] = loadImage("");
-  particles[3] = loadImage("");
-  particles[4] = loadImage("");
+  particles[0] = loadImage("red_particle.png");
+  particles[1] = loadImage("green_particle.png");
+  particles[2] = loadImage("blue_particle.png");
+  particles[3] = loadImage("purple_particle.png");
+  particles[4] = loadImage("gray_particle.png");
   textFont(font);
   GAME_OVER = false;
   firstClick = true;
@@ -111,7 +111,7 @@ public void draw() {
   }
   noStroke();
   for(int i = 0; i < explosions.size(); i++) {
-    if(!explosions.get(i).show()) i--;
+    if(!explosions.get(i).show()) { killParticle(explosions.get(i));}
   }
   for(int r = 0; r < NUM_ROWS; r++) {
     for(int c = 0; c < NUM_COLUMNS; c++) {
