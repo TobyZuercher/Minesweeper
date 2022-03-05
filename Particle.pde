@@ -21,7 +21,7 @@ public class Particle {
 public void addExplosion(float x, float y, float r) {
   for(int i = 0; i < 20; i++) {
     float angle = i*2*PI/20; float xPos = r*cos(angle) + x; float yPos = r*sin(angle) + y;
-    PImage p = particles[(int)(Math.random()*5)];
+    PImage p = particleImages[(int)(Math.random()*5)];
     explosions.add(new Particle(p, xPos, yPos, 10, 0.9, angle));
   }
 }

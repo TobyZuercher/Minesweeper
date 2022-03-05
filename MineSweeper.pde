@@ -10,17 +10,17 @@ public static final int WIDTH = 600;
 public static final int HEIGHT = 650;
 public PImage flag;
 public PFont font;
-public PImage[] particles = new PImage[5];
+public PImage[] particleImages = new PImage[5];
 public ArrayList<Particle> explosions = new ArrayList<Particle>();
 
 public void setup() {
   flag = loadImage("flag.png");
   font = createFont("bitlow.ttf", 72);
-  particles[0] = loadImage("red_particle.png");
-  particles[1] = loadImage("green_particle.png");
-  particles[2] = loadImage("blue_particle.png");
-  particles[3] = loadImage("purple_particle.png");
-  particles[4] = loadImage("gray_particle.png");
+  particleImages[0] = loadImage("red_particle.png");
+  particleImages[1] = loadImage("green_particle.png");
+  particleImages[2] = loadImage("blue_particle.png");
+  particleImages[3] = loadImage("purple_particle.png");
+  particleImages[4] = loadImage("gray_particle.png");
   textFont(font);
   GAME_OVER = false;
   firstClick = true;
