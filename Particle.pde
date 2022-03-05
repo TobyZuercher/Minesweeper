@@ -1,20 +1,19 @@
 public class Particle {
-  private PImage particle;
+  private PImage particleImage;
   private float x, y, width, height, scale, xVel, yVel;
   
   
   public Particle(PImage p, float xPos, float yPos, float w, float s, float a) { //s for scale, < 1
-    particle = p; x = xPos; y = yPos; width = w; height = w; scale = s; xVel = 3*cos(a); yVel = 3*sin(a);
+    particleImage = p; x = xPos; y = yPos; width = w; height = w; scale = s; xVel = 3*cos(a); yVel = 3*sin(a);
   }
   
   public boolean show() {
     if(width < 1 || height < 1) {
-      //killParticle(this);
       return false;
     }
     width *= scale; height *= scale;
     x+=xVel; y+=yVel;
-    image(particle, x, y, width, height);
+    image(particleImage, x, y, width, height);
     return true;
   }
 }

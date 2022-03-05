@@ -15,7 +15,7 @@ public ArrayList<Particle> explosions = new ArrayList<Particle>();
 
 public void setup() {
   flag = loadImage("flag.png");
-  font = createFont("bitlow.otf", 72);
+  font = createFont("bitlow.ttf", 72);
   particles[0] = loadImage("red_particle.png");
   particles[1] = loadImage("green_particle.png");
   particles[2] = loadImage("blue_particle.png");

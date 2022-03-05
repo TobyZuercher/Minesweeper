@@ -39,7 +39,7 @@ public class Square {
     addExplosion(x + width/2, y + height/2, 5);
     if(firstClick) {
       if(isBomb || tileNum != 0) {
-        reRunSetup(col, row);
+        rerunSetup(col, row);
         return;
       }
       else firstClick = false;
@@ -113,7 +113,7 @@ public class RestartButton {
   }
 }
 
-public void reRunSetup(int r, int c) {
+public void rerunSetup(int r, int c) {
   setup();
   field[c][r].clickLeft();
 }
